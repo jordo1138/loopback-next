@@ -87,7 +87,7 @@ export function createRetrieveSuite(
     it('retrieves an instance of a model from its foreign key value', async () => {
       const pens = await repo.create({name: 'Pens', categoryId: 1});
       const pencils = await repo.create({name: 'Pencils', categoryId: 2});
-      const products = await findByForeignKeys(repo, 'categoryId', [1]);
+      const products = await findByForeignKeys(repo, 'categoryId', 1);
       expect(products).deepEqual([pens]);
       expect(products).to.not.containDeep(pencils);
     });
