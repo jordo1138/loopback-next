@@ -32,11 +32,14 @@ export async function findByForeignKeys<
     throw new Error('scope is not supported');
   }
 
-  const value = Array.isArray(fkValues)
-    ? fkValues.length === 1
-      ? fkValues[0]
-      : {inq: fkValues}
-    : fkValues;
+  let value;
+
+  if (Array.isArray(fkValues)) {
+    if (fkValues.length === 0) return [];
+    value = fkValues.length === 1 ? fkValues[0] : {inq: fkValues};
+  } else {
+    value = fkValues;
+  }
 
   const where = ({[fkName]: value} as unknown) as Where<Target>;
   const targetFilter = {where};

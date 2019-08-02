@@ -19,6 +19,13 @@ describe('findByForeignKeys', () => {
     await productRepo.deleteAll();
   });
 
+  it('returns an empty array when no foreign keys are passed in', async () => {
+    const fkIds: number[] = [];
+    await productRepo.create({id: 1, name: 'product', categoryId: 1});
+    const products = await findByForeignKeys(productRepo, 'categoryId', fkIds);
+    expect(products).to.be.empty();
+  });
+
   it('returns an empty array when no instances have the foreign key value', async () => {
     await productRepo.create({id: 1, name: 'product', categoryId: 1});
     const products = await findByForeignKeys(productRepo, 'categoryId', 2);
